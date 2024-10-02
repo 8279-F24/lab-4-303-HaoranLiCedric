@@ -1,40 +1,50 @@
 import time
+from adafruit_circuitplayground import cp
 
-#cp.pixels.auto_write = False
-#cp.pixels.brightness = 0.3
+cp.pixels.auto_write = False
+cp.pixels.brightness = 0.3
 flag = 1
-cp_color = [(0,0,0)]*10
+
 while flag == 1:
-    max = 255
-    color1 = input("Witch color do you want to show?(Enter 'r' for red or 'g' for green):").lower()
-    if color1 == "r":
-        while max > 0:
-    
-            for i in range(10):
-                cp_color[i] = (max, 0, 0) 
-            #cp.pixels.show()
-            print(cp_color)
-            time.sleep(0.3)
+    max_value = 255 
 
-            max = max - 1
-    elif cp_color == "g":
-        while max > 0:
-    
-            for i in range(10):
-                cp_color[i] = (0, max, 0) 
-            #cp.pixels.show()
-            print(cp_color)
-            time.sleep(0.3)
+    while True: 
+        try:
 
-            max = max - 1
-    else:
-        print("Invalid input, please enter r or g.")
-        
-    restart = input("Do you want to start again?(Enter'q'to stop,any other key to continue):").lower()
+            cp_color = int(input("Which color do you want to show? (Enter '1' for red, '2' for green, '3' for blue): "))
+            if cp_color not in [1, 2, 3]:
+                print("Invalid input, please enter '1', '2', or '3'.")
+            else:
+                break 
+        except ValueError:
+            print("Wrong input, you should enter a number.")
+
+    if cp_color == 1:
+        while max_value > 0:
+            for i in range(10):
+                cp.pixels[i] = (max_value, 0, 0)
+            cp.pixels.show()
+            time.sleep(0.3)
+            max_value -= 1
+    elif cp_color == 2:
+        while max_value > 0:
+            for i in range(10):
+                cp.pixels[i] = (0, max_value, 0) 
+            cp.pixels.show()
+            time.sleep(0.3)
+            max_value -= 1
+    elif cp_color == 3:
+        while max_value > 0:
+            for i in range(10):
+                cp.pixels[i] = (0, 0, max_value) 
+            cp.pixels.show()
+            time.sleep(0.3)
+            max_value -= 1
+
+    restart = input("Do you want to start again? (Enter 'q' to stop, any other key to continue): ").lower()
     if restart == "q":
-    
-        #cp_pixels.fill((0, 0, 0))
-        #cp.pixels.show()
+        cp.pixels.fill((0, 0, 0))
+        cp.pixels.show()
         flag = 0
         print("Program ended.")
         break
